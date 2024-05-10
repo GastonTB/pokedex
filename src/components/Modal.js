@@ -18,7 +18,7 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
   const [pokemonData, setPokemonData] = useState(null);
   const [isAnimated, setIsAnimated] = useState(false);
   const [lastFlavorText, setLastFlavorText] = useState(null);
-  const [pokemonWithSameSpecies, setPokemonWithSameSpecies] = useState([]);
+  const [pokemonWithSameSpecies, setPokemonWithSameSpecies] = useState([null]);
   const [evolutionChainData, setEvolutionChainData] = useState(null);
   const [setSelectedEvolution] = useState(null);
 
@@ -27,6 +27,8 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
       setPokemonData(null);
       setIsAnimated(false);
       setLastFlavorText(null);
+      setEvolutionChainData(null);
+      setPokemonWithSameSpecies(null);
     }
   }, [isOpen]);
 
@@ -333,28 +335,34 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                       </div>
                     </div>
                     <div className="ml-2 alt pt-1 hidden">
-                      {pokemonWithSameSpecies.length > 0 && (
-                        <div className="pokemon-same-species">
-                          <p className="font-semibold text-lg">
-                            Alternative Forms:
-                          </p>
-                          <div className="uppercase text-sm">
-                            {pokemonWithSameSpecies.map((pokemon, index) => (
-                              <button
-                                key={index}
-                                className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
-                                onClick={() =>
-                                  changePokemonForm(
-                                    pokemon.name,
-                                    setPokemonData
-                                  )
-                                }
-                              >
-                                <p>{pokemon.name}</p>
-                              </button>
-                            ))}
+                      {pokemonWithSameSpecies ? (
+                        pokemonWithSameSpecies.length > 0 ? (
+                          <div className="pokemon-same-species">
+                            <p className="font-semibold text-lg">
+                              Alternative Forms:
+                            </p>
+                            <div className="uppercase text-sm">
+                              {pokemonWithSameSpecies.map((pokemon, index) => (
+                                <button
+                                  key={index}
+                                  className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
+                                  onClick={() =>
+                                    changePokemonForm(
+                                      pokemon.name,
+                                      setPokemonData
+                                    )
+                                  }
+                                >
+                                  <p>{pokemon.name}</p>
+                                </button>
+                              ))}
+                            </div>
                           </div>
-                        </div>
+                        ) : (
+                          <p>Loading alternative forms...</p>
+                        )
+                      ) : (
+                        <p>Loading...</p>
                       )}
                     </div>
                   </div>
@@ -528,27 +536,34 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                   </div>
                 </div>
                 <div className="ml-2 alt pt-1 hidden">
-                  {pokemonWithSameSpecies.length > 0 && (
-                    <div className="pokemon-same-species">
-                      <p className="font-semibold text-lg">
-                        Alternative Forms:
-                      </p>
-                      <div className="uppercase text-sm">
-                        {pokemonWithSameSpecies.map((pokemon, index) => (
-                          <button
-                            key={index}
-                            className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
-                            onClick={() =>
-                              changePokemonForm(pokemon.name, setPokemonData)
-                            }
-                          >
-                            <p>{pokemon.name}</p>
-                          </button>
-                        ))}
+                  {pokemonWithSameSpecies ? (
+                    pokemonWithSameSpecies.length > 0 ? (
+                      <div className="pokemon-same-species">
+                        <p className="font-semibold text-lg">
+                          Alternative Forms:
+                        </p>
+                        <div className="uppercase text-sm">
+                          {pokemonWithSameSpecies.map((pokemon, index) => (
+                            <button
+                              key={index}
+                              className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
+                              onClick={() =>
+                                changePokemonForm(pokemon.name, setPokemonData)
+                              }
+                            >
+                              <p>{pokemon.name}</p>
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <p>Loading alternative forms...</p>
+                    )
+                  ) : (
+                    <p>Loading...</p>
                   )}
                 </div>
+
                 <div className="ml-3 stats mt-2 hidden">
                   <div className="">
                     <p className="font-semibold text-lg">STATS:</p>
