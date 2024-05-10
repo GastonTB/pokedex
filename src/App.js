@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { getAllPokemon } from "./api.js";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -25,7 +25,7 @@ function App() {
     }
 
     fetchData();
-  }, [pokemonList]);
+  }, []);
 
   const handleOpenModal = (pokemonUrl) => {
     setSelectedPokemonUrl(pokemonUrl);
@@ -36,12 +36,13 @@ function App() {
     setIsModalOpen(false);
   };
 
-  const filteredPokemonList =
-    searchTerm.trim() !== ""
+  const filteredPokemonList = useMemo(() => {
+    return searchTerm.trim() !== ""
       ? pokemonList.filter((pokemon) =>
           pokemon.species.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
       : pokemonList;
+  }, [pokemonList, searchTerm]);
 
   return (
     <div className="relative">
@@ -74,13 +75,17 @@ function App() {
       <div className="flex justify-center">
         <div className="z-3">
           <ul className="px-4 pb-20 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredPokemonList.map((pokemon) => (
-              <Card
-                key={pokemon.id}
-                pokemon={pokemon}
-                onOpenModal={handleOpenModal}
-              />
-            ))}
+            {filteredPokemonList.length === 0 ? (
+              <p>No se encontraron resultados.</p>
+            ) : (
+              filteredPokemonList.map((pokemon) => (
+                <Card
+                  key={pokemon.id}
+                  pokemon={pokemon}
+                  onOpenModal={handleOpenModal}
+                />
+              ))
+            )}
           </ul>
         </div>
       </div>

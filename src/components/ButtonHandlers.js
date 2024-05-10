@@ -81,7 +81,6 @@ export const handleEvoDataClick = (evolution) => {
         const value = requirements[key];
         const cleanedValue = value.toString().replace(/[^a-zA-Z0-9\s_]/g, " ");
 
-        // Agregar el requisito de evolución
         const requirementElement = document.createElement("p");
         requirementElement.className = "text-sm ml-1";
         requirementElement.textContent = `${cleanedKey}: ${cleanedValue}`;

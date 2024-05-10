@@ -20,7 +20,6 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
   const [lastFlavorText, setLastFlavorText] = useState(null);
   const [pokemonWithSameSpecies, setPokemonWithSameSpecies] = useState([null]);
   const [evolutionChainData, setEvolutionChainData] = useState(null);
-  const [setSelectedEvolution] = useState(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -216,8 +215,7 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                                         key={j}
                                         onClick={() =>
                                           handleEvoDataClick(
-                                            evolutionChainData[i],
-                                            setSelectedEvolution
+                                            evolutionChainData[i]
                                           )
                                         }
                                         className={`flex text-sm my-1 hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase evo-data ${
@@ -563,7 +561,6 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                     <p>Loading...</p>
                   )}
                 </div>
-
                 <div className="ml-3 stats mt-2 hidden">
                   <div className="">
                     <p className="font-semibold text-lg">STATS:</p>
@@ -600,8 +597,7 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                                   <button
                                     onClick={() =>
                                       handleEvoDataClickMobile(
-                                        evolutionChainData[i],
-                                        setSelectedEvolution
+                                        evolutionChainData[i]
                                       )
                                     }
                                     key={j}
