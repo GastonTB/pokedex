@@ -72,10 +72,7 @@ export const handleEvoDataClick = (evolution) => {
   requirementsHeader.textContent = "Evolution Requirements:";
   evoRequirementsDiv.appendChild(requirementsHeader);
 
-  if (
-    evolution.requirements &&
-    Object.keys(evolution.requirements).length > 1
-  ) {
+  if (evolution.requirements) {
     const requirements = evolution.requirements;
     const requirementsFragment = document.createDocumentFragment();
     for (const key in requirements) {
