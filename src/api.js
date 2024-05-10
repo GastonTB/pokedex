@@ -1,32 +1,33 @@
 import axios from "axios";
 
-export async function getAllPokemon() {
+export async function getAllPokemon(offset = 0, limit = 100) {
   const startTime = Date.now();
   let allPokemon = [];
-  let nextUrl = "https://pokeapi.co/api/v2/pokemon";
-  const pokemonDataPromises = [];
+  let pokemonCount = 0;
 
   try {
-    while (nextUrl) {
-      const response = await axios.get(nextUrl);
+    while (pokemonCount < 10000) {
+      const response = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+      );
       const pokemonList = response.data.results;
 
-      pokemonList.forEach((pokemon) => {
-        pokemonDataPromises.push(
-          new Promise(async (resolve) => {
-            const pokemonDetailsResponse = await axios.get(pokemon.url);
-            const pokemonData = pokemonDetailsResponse.data;
-            resolve({ ...pokemonData, url: pokemon.url });
-          })
-        );
+      if (pokemonList.length === 0) break; // No more Pokémon to fetch
+
+      const pokemonDataPromises = pokemonList.map(async (pokemon) => {
+        const pokemonDetailsResponse = await axios.get(pokemon.url);
+        const pokemonData = pokemonDetailsResponse.data;
+        return { ...pokemonData, url: pokemon.url };
       });
 
-      nextUrl = response.data.next;
+      const pokemonData = await Promise.all(pokemonDataPromises);
+      allPokemon = [...allPokemon, ...pokemonData];
+      pokemonCount += pokemonData.length;
+
+      offset += limit;
     }
 
-    const pokemonData = await Promise.all(pokemonDataPromises);
-
-    const filteredPokemonData = pokemonData.filter(
+    const filteredPokemonData = allPokemon.filter(
       (pokemon) => pokemon.id < 10000
     );
 
