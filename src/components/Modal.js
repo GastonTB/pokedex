@@ -340,20 +340,24 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                               Alternative Forms:
                             </p>
                             <div className="uppercase text-sm">
-                              {pokemonWithSameSpecies.map((pokemon, index) => (
-                                <button
-                                  key={index}
-                                  className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
-                                  onClick={() =>
-                                    changePokemonForm(
-                                      pokemon.name,
-                                      setPokemonData
-                                    )
-                                  }
-                                >
-                                  <p>{pokemon.name}</p>
-                                </button>
-                              ))}
+                              {pokemonWithSameSpecies.length === 1 ? (
+                                <p>No alternative forms available.</p>
+                              ) : (
+                                pokemonWithSameSpecies.map((pokemon, index) => (
+                                  <button
+                                    key={index}
+                                    className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
+                                    onClick={() =>
+                                      changePokemonForm(
+                                        pokemon.name,
+                                        setPokemonData
+                                      )
+                                    }
+                                  >
+                                    <p>{pokemon.name}</p>
+                                  </button>
+                                ))
+                              )}
                             </div>
                           </div>
                         ) : (
@@ -541,17 +545,24 @@ function Modal({ isOpen, onClose, pokemonUrl }) {
                           Alternative Forms:
                         </p>
                         <div className="uppercase text-sm">
-                          {pokemonWithSameSpecies.map((pokemon, index) => (
-                            <button
-                              key={index}
-                              className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
-                              onClick={() =>
-                                changePokemonForm(pokemon.name, setPokemonData)
-                              }
-                            >
-                              <p>{pokemon.name}</p>
-                            </button>
-                          ))}
+                          {pokemonWithSameSpecies.length === 1 ? (
+                            <p>No alternative forms available.</p>
+                          ) : (
+                            pokemonWithSameSpecies.map((pokemon, index) => (
+                              <button
+                                key={index}
+                                className="flex hover:bg-black hover:text-teal-400 focus:bg-black focus:text-teal-400 uppercase my-1"
+                                onClick={() =>
+                                  changePokemonForm(
+                                    pokemon.name,
+                                    setPokemonData
+                                  )
+                                }
+                              >
+                                <p>{pokemon.name}</p>
+                              </button>
+                            ))
+                          )}
                         </div>
                       </div>
                     ) : (
