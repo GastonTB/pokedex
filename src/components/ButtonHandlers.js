@@ -77,7 +77,6 @@ export const handleEvoDataClick = (evolution) => {
     typeof evolution.requirements === "object" &&
     Object.keys(evolution.requirements).length > 0
   ) {
-    console.log(evolution.requirements);
     const requirements = evolution.requirements;
     const requirementsFragment = document.createDocumentFragment();
     for (const key in requirements) {
